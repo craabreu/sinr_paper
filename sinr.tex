@@ -1,0 +1,132 @@
+\documentclass[
+    journal=jctcce,
+    layout=twocolumn
+]{achemso}
+
+\setkeys{acs}{
+	abbreviations = false,
+	articletitle  = false,
+	keywords      = false,
+	maxauthors    = 10,
+	super         = true
+}
+
+% Comment below before submitting:
+\let\titlefont\undefined
+\usepackage[fontsize=11pt]{scrextend}
+\usepackage[hidelinks,colorlinks,citecolor=blue]{hyperref}
+%\flushbottom
+% Up to this point
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[T1]{fontenc}
+%
+\usepackage[table]{xcolor}
+\definecolor{lightgray}{gray}{0.85}
+%
+\usepackage{array}
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{R}{>{$}r<{$}}
+%
+\newcommand{\mt}[1]{\boldsymbol{\mathbf{#1}}}   % matrix symbol
+\newcommand{\vt}[1]{\boldsymbol{\mathbf{#1}}}   % vector symbol
+\newcommand{\tr}[1]{#1^\text{t}}                % transposition
+\newcommand{\diff}[2]{\frac{\partial #2}{\partial #1}} % derivative
+%\newcommand{\diff}[2]{\nabla_{#1}{#2}} % derivative
+%\newcommand{\diff}[2]{\partial_{#1}{#2}} % derivative
+\newcommand{\avg}[1]{\overline{#1}}             % average
+
+\newcommand{\dof}{i}   % index for each degree of freedom
+
+%\listfiles
+
+\author{Charlles R. A. Abreu}
+\email{abreu@eq.ufrj.br}
+\affiliation{Chemical Engineering Department, Escola de Quimica, Universidade Federal do Rio de Janeiro, Rio de Janeiro, RJ 21941-909, Brazil}
+\alsoaffiliation{Department of Chemistry, New York University, New York, New York 10003, USA}
+
+\author{Mark E. Tuckerman}
+\email{marktuckerman@nyu.edu}
+\affiliation{Department of Chemistry, New York University, New York, New York 10003, USA}
+\alsoaffiliation{Courant Institute of Mathematical Sciences, New York University, New York, New York 10012, USA}
+\alsoaffiliation{NYU-ECNU Center for Computational Chemistry at NYU Shanghai, Shanghai 200062, China}
+
+
+\title{Free Energy Computation and Thermodynamic Property Reweighting From Multiple Time-Correlated Datasets}
+
+\abbreviations{i.i.d., MC, MD, CLT, OBM, MSE, FEP, BAR, WHAM, MBAR, MICS}
+
+\keywords{Free Energy Computation, Reweighting, Multistate, Uncertainty Estimation}
+
+\begin{document}
+
+%\begin{tocentry}
+%Graphical Abstract
+%\end{tocentry}
+
+%\tableofcontents
+
+\begin{abstract}
+To be included.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+\cite{Leimkuhler_2013}
+
+
+\section{Results}
+
+
+\section{Method}
+
+\subsection{Equations of Motion}
+
+Consider a system whose every degree of freedom $\dof$ has coordinate $q_\dof$, velocity $v_\dof$, and associated mass $m_\dof$.
+The system is subject to a potential $U(\vt q)$ and, therefore, the force acting on $\dof$ is $f_\dof = -\diff{q_\dof}{U}$.
+Also for every degree of freedom, we define auxiliary thermostat variables $v_{1,\dof}$ and $v_{2,\dof}$ with associated inertial parameters $ Q_1$ and $Q_2$, respectively.
+The motion of this system is prescribed by a stochastic differential equation system which reads
+\begin{subequations}
+\begin{align}
+& \dot{q}_\dof = v_\dof, \label{eq:q} \\
+& \dot{v}_\dof = \frac{f_\dof}{m_\dof} - \lambda_\dof v_\dof, \label{eq:v} \\
+& \dot{v}_{1,\dof} = - \lambda_\dof v_{1,\dof} - v_{2,\dof} v_{1,\dof}, \quad \mathrm{and}  \label{eq:v1} \\
+& dv_{2,\dof} = \tfrac{Q_1 v_{1,\dof}^2 - kT}{Q_2}dt - \gamma v_{2,\dof} dt + \sqrt{\tfrac{2 \gamma kT}{Q_2}} dW_\dof, \label{eq:v2}
+\end{align}
+\end{subequations}
+where $k$ is the Boltzmann constant,
+$T$ is the temperature of the heat bath,
+$\gamma$ is a friction constant,
+%$\sigma = \sqrt{\frac{2 \gamma kT}{Q_2}}$,
+$dW_\dof$ represents an infinitesimal increment of a Wiener process,
+and $\lambda_\dof$ is a Lagrange multiplier aimed to enforce an isokinetic constraint to each degree of freedom, which is
+\begin{equation}
+m v_\dof^2 + \frac{1}{2} Q_1 v_{1,\dof}^2 = kT.
+\end{equation}
+
+Since it implies that $m v_\dof \dot{v}_\dof + \frac{1}{2} Q_1 v_{1,\dof}\dot{v}_{1,\dof} = 0$, substitution of Eqs.~\eqref{eq:v} and \eqref{eq:v1} into this constraint shows that
+\begin{equation}
+\lambda_\dof = \frac{f_\dof v_\dof - \frac{1}{2} Q_1 v_{2,\dof} v_{1,\dof}^2}{m_\dof v_\dof^2 + \frac{1}{2} Q_1 v_{1,\dof}^2}.
+\end{equation}
+        
+In practice, a single value $Q_1 = Q_2 = kT\tau^2$, where $\tau$ is a relevant time scale for the system, is employed for all degrees of freedom.
+
+\subsection{Solvation Free Energy}
+\label{sec:solvation free energy}
+
+
+\section{Conclusion}
+
+
+\begin{acknowledgement}
+
+C.R.A.A. acknowledges the financial support of Petrobras (project code CENPES 16113).
+
+\end{acknowledgement}
+
+\bibliography{sinr}
+
+\end{document}
